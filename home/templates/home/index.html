@@ -3,9 +3,47 @@
 {% load static %}
 
 {% block content%}
-<div class="container">
-    <div class="row">
-        <div class="col"></div>
-    </div>
+<div class="container mt-5 index-container">
+
+    <section class="row mb-5 border border-dark rounded p-3 mx-2 mx-md-5">
+        <div class="col text-center">
+            <h2>Welcome to GetMyDesign</h2>
+            <p>Professional graphic design services.</p>
+        </div>
+    </section>
+
+    <section class="row mb-5 border border-dark rounded p-3 mx-2 mx-md-5">
+        <div class="col-12 text-center mb-4">
+            <h3>Our Work in Action</h3>
+            <p>A glimpse into some of our design projects.</p>
+        </div>
+        <div class="col-12 col-md-4 mb-4">
+            <img src="/media/icon.jpg" class="img-fluid rounded shadow-sm img-fixed-size" alt="Design">
+        </div>
+
+        <div class="col-12 col-md-4 mb-4">
+            <img src="/media/logo.jpg" class="img-fluid rounded shadow-sm img-fixed-size" alt="Design">
+        </div>
+
+        <div class="col-12 col-md-4 mb-4">
+            <img src="/media/poster.jpg" class="img-fluid rounded shadow-sm img-fixed-size" alt="Design">
+        </div>
+    </section>
+
+    <section class="row mb-5 border border-dark rounded p-3 mx-2 mx-md-5">
+        <div class="col text-center">
+            <h3>Previous Work</h3>
+            <p>See some of our previous work.</p>
+        </div>
+    </section>
+
+    <section class="row mb-5 border border-dark rounded p-3 mx-2 mx-md-5">
+        <div class="col text-center">
+            <h3>Request your Design</h3>
+            <p>Fill out the form for your custom order.</p>
+            <a href="{% url 'account_login' %}" class="btn btn-inicial">Request your Design</a>
+        </div>
+    </section>
+
 </div>
 {% endblock%}

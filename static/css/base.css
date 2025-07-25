@@ -3,6 +3,35 @@ body {
     font-family: Lato, sans-serif;
     height: calc(100vh - 164px);
     color: #000000;
+    padding-top: 80px;
+}
+
+
+/*==================
+     Home page
+====================*/
+
+.index-container{
+    padding-bottom: 3rem;
+
+}
+
+.img-fixed-size {
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    object-fit: cover;
+    image-rendering: auto;
+}
+
+.btn-inicial {
+    color: white;
+    background: #0056b3;
+}
+
+.btn-inicial:hover {
+    color: white;
+    background: #00356d;
 }
 
 .message-container {
