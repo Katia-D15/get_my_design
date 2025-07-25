@@ -1,0 +1,26 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Lato, sans-serif;
+    height: calc(100vh - 164px);
+    color: #000000;
+}
+
+.message-container {
+    position: fixed;
+    top: 72px;
+    right: 15px;
+    z-index: 99999999999;
+}
+
+.main-logo-link{
+    width: fit-content;
+}
+
+/*==================
+     Footer
+====================*/
+footer {
+    background-color: #343a40;
+}
+
+
