@@ -2,6 +2,7 @@
 
 {% url 'home' as home_url %}
 {% url 'account_login' as login%}
+{% url 'create_order' as create_order_url %}
 
 <!doctype html>
 <html lang="en">
@@ -75,6 +76,9 @@
              <li class="nav-item">
               <a class="nav-link">My Orders</a>
              </li>
+             <li class="nav-item">
+              <a class="nav-link {% if request.path == create_order_url %}active" aria-current="page{% endif %}" href="{% url 'create_order' %}">Make a Request</a>
+             </li>
           {% else%}
              <li class="nav-item">
               <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}" href="{% url 'home' %}">Home</a>
@@ -129,12 +133,22 @@
     </div>
     {% endif %}
 
-    {% block page_header %}
-    {% endblock %}
+    <main class="flex-shrink-0 main-bg">
+      {% if user.is_authenticated%}
+      <p class="text-right m-3">Logged in as {{user}}</p>
+      {% else %}
+      <p class="text-right m-3">You are not logged in</p>
+      {% endif %}
 
-    {% block content %}
-    <!-- Content Goes here -->
-    {% endblock %}
+      {% block page_header %}
+      {% endblock %}
+
+      {% block content %}
+      <!-- Content Goes here -->
+      {% endblock %}
+
+    </main>
+    
 
     {% block postloadjs %}
     {% endblock %}
