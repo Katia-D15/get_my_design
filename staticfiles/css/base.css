@@ -1,0 +1,63 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Lato, sans-serif;
+    height: calc(100vh - 164px);
+    color: #000000;
+    padding-top: 80px;
+    padding-bottom: 900px;
+}
+
+
+/*==================
+     Home page
+====================*/
+
+.index-container{
+    padding-bottom: 3rem;
+
+}
+
+.img-fixed-size {
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    object-fit: cover;
+    image-rendering: auto;
+}
+
+.btn-inicial {
+    color: white;
+    background: #0056b3;
+}
+
+.btn-inicial:hover {
+    color: white;
+    background: #00356d;
+}
+
+.message-container {
+    position: fixed;
+    top: 72px;
+    right: 15px;
+    z-index: 99999999999;
+}
+
+.main-logo-link{
+    width: fit-content;
+}
+
+/*==================
+     Footer
+====================*/
+footer {
+    background-color: #343a40;
+}
+
+
+/*==================
+     Allauth-Forms
+====================*/
+.custom-max-width {
+    max-width: 700px;
+    width: 100%;
+}
