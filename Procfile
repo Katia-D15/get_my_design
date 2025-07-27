@@ -1,0 +1,1 @@
+web: gunicorn get_my_design.wsgi
