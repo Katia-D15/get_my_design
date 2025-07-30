@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="border border-dark rounded p-4 mx-auto custom-max-width">
+<div class="row">
+<div class="col-12 col-sm-10 col-md-8 mt-3 offset-sm-1 offset-md-2">
+<h2 class="mb-5">Request Your Design</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button class="btn btn-inicial" type="submit">Submit Request</button>
+
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -3,6 +3,7 @@
 {% url 'home' as home_url %}
 {% url 'account_login' as login%}
 {% url 'create_order' as create_order_url %}
+{% url 'review_order' as review_order_url %}
 
 <!doctype html>
 <html lang="en">
@@ -77,7 +78,10 @@
               <a class="nav-link">My Orders</a>
              </li>
              <li class="nav-item">
-              <a class="nav-link {% if request.path == create_order_url %}active" aria-current="page{% endif %}" href="{% url 'create_order' %}">Make a Request</a>
+              <a class="nav-link {% if request.path == create_order_url %}active" aria-current="page{% endif %}" href="{% url 'create_order' %}">Request your Design</a>
+             </li>
+              <li class="nav-item">
+              <a class="nav-link {% if request.path == review_order_url %}active" aria-current="page{% endif %}" href="{% url 'review_order' %}">Order Review</a>
              </li>
           {% else%}
              <li class="nav-item">
@@ -87,7 +91,7 @@
               <a class="nav-link">Previous Work</a>
              </li>
              <li class="nav-item">
-              <a class="nav-link {% if request.path == login %}active" aria-current="page{% endif %}" href="{% url 'account_login' %}">Request your Design</a>
+              <a class="nav-link {% if request.path == login %}active" aria-current="page{% endif %}" href="{% url 'account_login' %}">Make a Request</a>
              </li>
              {% endif %}
             </ul>
