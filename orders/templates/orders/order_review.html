@@ -1,7 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Order Review</h2>
+<div class="border border-dark rounded p-4 mx-auto custom-max-width">
+<div class="row">
+<div class="col-12 col-sm-10 col-md-8 mt-3 offset-sm-1 offset-md-2">
+<h2 class="mb-5">Order Review</h2>
 
+{% if editing %}
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p}}
+<button class="btn btn-inicial" type="submit" name="action" value="save_edit">Save Changes</button>
+</form>
+{%else%}
+<div class="mb-4">
+    <p><strong>Design Type</strong>{{ order.design_type}}</p>
+    <p><strong>Size</strong>{{ order.size}}</p>
+    <p><strong>Description</strong>{{ order.description}}</p>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-inicial" type="submit" name="action" value="edit">Edit</button>
+    <button class="btn btn-inicial" type="submit" name="action" value="cancel"
+        onclick="return confirm('Are you sure you want to cancel this order? This action cannot be undone.')">Cancel
+    </button>
+    <button class="btn btn-inicial" type="submit" name="action" value="pay">Proceed to Payment</button>
 
+</form>
+</div>
+</div>
+</div>
+{% endif %}
 {% endblock %}

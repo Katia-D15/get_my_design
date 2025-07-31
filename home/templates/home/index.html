@@ -41,7 +41,11 @@
         <div class="col text-center">
             <h3>Request your Design</h3>
             <p>Fill out the form for your custom order.</p>
+            {% if user.is_authenticated %}
+            <a href="{% url 'create_order' %}" class="btn btn-inicial">Request your Design</a>
+            {% else %}
             <a href="{% url 'account_login' %}" class="btn btn-inicial">Request your Design</a>
+            {% endif %}
         </div>
     </section>
 
