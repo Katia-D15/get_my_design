@@ -1,10 +1,10 @@
 body {
     background-color: #f8f9fa;
     font-family: Lato, sans-serif;
-    height: calc(100vh - 164px);
+    min-height: 100vh;
     color: #000000;
     padding-top: 80px;
-    padding-bottom: 900px;
+    
 }
 
 

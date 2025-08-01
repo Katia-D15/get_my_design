@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import OrderForm
 from .models import Order
+from .utils import automatic_price
 
 
 @login_required
@@ -16,6 +17,8 @@ def create_order(request):
             order = form.save(commit=False)
             order.user = request.user
             order.status = 'pending'
+
+            order.price = automatic_price(order)
             order.save()
             messages.add_message(request, messages.SUCCESS,
                                  'Your order was saved successfully'
@@ -47,7 +50,9 @@ def review_order(request, order_number):
         elif action == 'save_edit':
             form = OrderForm(request.POST, request.FILES, instance=order)
             if form.is_valid():
-                form.save()
+                updated_order = form.save(commit=False)
+                updated_order.price = automatic_price(updated_order)
+                updated_order.save()
                 messages.add_message(request, messages.SUCCESS,
                                      'Order updated successfully.'
                                      )

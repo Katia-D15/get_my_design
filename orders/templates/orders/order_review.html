@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="border border-dark rounded p-4 mx-auto custom-max-width">
@@ -10,14 +11,25 @@
 <form method="post" enctype="multipart/form-data">
 {% csrf_token %}
 {{ form.as_p}}
+<p> Estimated price: £<span id="price-preview">0.00</span></p>
 <button class="btn btn-inicial" type="submit" name="action" value="save_edit">Save Changes</button>
 </form>
 {%else%}
 <div class="mb-4">
-    <p><strong>Design Type</strong>{{ order.design_type}}</p>
-    <p><strong>Size</strong>{{ order.size}}</p>
-    <p><strong>Description</strong>{{ order.description}}</p>
+    <p><strong>Design Type: </strong>{{ order.design_type|capfirst}}</p>
+    <p><strong>Size: </strong>{{ order.size|capfirst}}</p>
+    <p><strong>Description: </strong>{{ order.description}}</p>
+    {% if order.field_upload %}
+    <p><strong>File: </strong>
+    <a href="{{ order.field_upload.url}}" target="_blank"> {{ order.field_upload.name}}
+    </a>
+    </p>
+    {% else %}
+    <p><strong>File(s): </strong>None</p>
+    {% endif %}
 </div>
+
+<p><strong>Price: £{{ order.price}}</strong></p>
 <form method="post">
     {% csrf_token %}
     <button class="btn btn-inicial" type="submit" name="action" value="edit">Edit</button>
@@ -31,4 +43,8 @@
 </div>
 </div>
 {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/automatic_price.js' %}"></script>
 {% endblock %}

@@ -10,7 +10,7 @@ class OrderForm(forms.ModelForm):
             'design_type': 'Choose one Design type',
             'size': 'Choose the size of your Design',
             'description': 'Give us more details about your custom design',
-            'field_upload': 'You can upload some images (Optional)',
+            'field_upload': 'You can upload an image (Optional)',
         }
 
         widgets = {

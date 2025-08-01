@@ -30,9 +30,11 @@ class Order(models.Model):
         User, on_delete=models.CASCADE, related_name='orders')
     order_number = models.CharField(
         max_length=32, unique=True, null=False, editable=False)
-    design_type = models.CharField(max_length=20, choices=DESIGN_TYPES)
-    size = models.CharField(max_length=10, choices=SIZE_OPTIONS)
-    description = models.TextField()
+    design_type = models.CharField(
+        max_length=20, choices=DESIGN_TYPES, null=False, blank=False)
+    size = models.CharField(
+        max_length=10, choices=SIZE_OPTIONS, null=False, blank=False)
+    description = models.TextField(null=False, blank=False)
     price = models.DecimalField(
         max_digits=10, decimal_places=2, null=False, default=0)
     status = models.CharField(
