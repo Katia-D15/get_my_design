@@ -9,7 +9,7 @@
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p}}
+    {{ form.as_p }}
     <p> Estimated price: £<span id="price-preview">0.00</span></p>
     <button class="btn btn-inicial" type="submit">Submit Request</button>
 
@@ -19,6 +19,6 @@
 </div>
 {% endblock %}
 
-{% block extra_js %}
+{% block postloadjs %}
 <script src="{% static 'js/automatic_price.js' %}"></script>
 {% endblock %}

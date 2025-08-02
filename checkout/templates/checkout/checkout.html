@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="border border-dark rounded p-4 mx-auto custom-max-width mb-5">
+<div class="row">
+<div class="col-12 col-sm-10 col-md-8 mt-3 offset-sm-1 offset-md-2">
+<h2 class="mb-5">Checkout</h2>
+
+<form id="payment-form" action="{% url 'checkout' order.order_number %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="rounded px-3 mb-5">
+        <legend class="fieldset-label" >Details</legend>
+        <div class="mb-4">
+        <p><strong>Design Type: </strong>{{ order.design_type|capfirst}}</p>
+        <p><strong>Size: </strong>{{ order.size|capfirst}}</p>
+        <p><strong>Description: </strong>{{ order.description}}</p>
+        {% if order.field_upload %}
+        <p><strong>File: </strong>
+        <a href="{{ order.field_upload.url}}" target="_blank"> {{ order.field_upload.name}}
+        </a>
+        </p>
+        {% else %}
+        <p><strong>File(s): </strong>None</p>
+        {% endif %}
+        </div>
+    </fieldset>
+
+    <fieldset class="px-3">
+        <legend class="fieldset-label small text-black px-2 w-auto" >Payment</legend>
+        <div class="mb-3"></div>
+        <div class="mb-3"></div>
+        <p><strong>Price: £{{ order.price}}</strong></p>
+        <div id="card-element" class="mb-3"></div>
+        <div id="card-errors" role="alert" class="text-danger mb-3"></div>
+    </fieldset>
+
+    <button id="submit-button" class="btn btn-inicial" type="submit">
+        Complete Order <i class="fas fa-lock" ></i>
+    </button>
+</form>
+
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{{ stripe_public_key|json_script:"id_stripe_public_key"}}
+{{ client_secret|json_script:"id_client_secret"}}
+<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+{% endblock %}

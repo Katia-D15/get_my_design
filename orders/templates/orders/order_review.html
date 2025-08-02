@@ -36,7 +36,9 @@
     <button class="btn btn-inicial" type="submit" name="action" value="cancel"
         onclick="return confirm('Are you sure you want to cancel this order? This action cannot be undone.')">Cancel
     </button>
-    <button class="btn btn-inicial" type="submit" name="action" value="pay">Proceed to Payment</button>
+    <a href="{% url 'checkout' order.order_number %}" class="btn btn-inicial">
+        <span>Proceed to Payment</span>
+    </a>
 
 </form>
 </div>
@@ -45,6 +47,6 @@
 {% endif %}
 {% endblock %}
 
-{% block extra_js %}
+{% block postloadjs %}
 <script src="{% static 'js/automatic_price.js' %}"></script>
 {% endblock %}

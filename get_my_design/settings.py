@@ -45,8 +45,11 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'crispy_forms',
+    'crispy_bootstrap4',
     'orders',
     'home',
+    'checkout',
 ]
 
 MIDDLEWARE = [
@@ -96,6 +99,9 @@ WSGI_APPLICATION = 'get_my_design.wsgi.application'
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -163,6 +169,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Stripe
+STRIPE_CURRENCY = 'gbp'
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 
 
 # Default primary key field type
