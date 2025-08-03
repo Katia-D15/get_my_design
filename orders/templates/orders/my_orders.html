@@ -9,12 +9,20 @@
 {% if orders %}
 <ul class="list-group">
     {% for order in orders%}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        Order Number: {{order.order_number}} - <strong>{{order.status|title}}</strong>
-        
+    <li class="list-group-item m-2">
+        <div class="text-break w-100 w-md-75">
+        <strong>Order Number:</strong> {{order.order_number}}<br>
+        <strong>Status:</strong> <strong>{{order.status|title}}</strong>
+        </div>
         {% if order.status == 'pending' %}
-        <a href="{% url 'review_order' order.order_number %}" class="btn btn-inicial">
+        <a href="{% url 'review_order' order.order_number %}" class="btn btn-inicial m-2">
             Resume Request
+        </a>
+        {% elif order.status == 'confirmed' %}
+        <span> Waiting for design to be completed.</span>
+        {% elif order.status == 'completed' and order.final_file %}
+        <a href="{{ order.final_file.url }}" class="btn btn-inicial" target="_blank" download>
+            Download
         </a>
         {% else %}
         <span class="text-muted">This order cannot be edited</span>

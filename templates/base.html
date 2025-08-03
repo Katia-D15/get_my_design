@@ -40,7 +40,7 @@
     {% endblock %}
     <title>GetMyDesign {% block extra_title%}{% endblock %}</title>
   </head>
-  <body class="d-flex flex-column">
+  <body class="d-flex flex-column min-vh-100">
     <header class="container-fluid fixed-top px-0">
       <!--<div id="topnav" class="row  pt-lg-2">
         <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
@@ -136,7 +136,7 @@
     </div>
     {% endif %}
 
-    <main class="flex-shrink-0 main-bg">
+    <main class="flex-grow-1">
       {% if user.is_authenticated%}
       <p class="text-right m-3">Logged in as {{user}}</p>
       {% else %}

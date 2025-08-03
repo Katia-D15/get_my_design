@@ -21,7 +21,7 @@
     <p><strong>Description: </strong>{{ order.description}}</p>
     {% if order.file_upload %}
     <p><strong>File: </strong>
-    <a href="{{ order.file_upload.url}}" target="_blank"> {{ order.file_upload.name}}
+    <a href="{{ order.file_upload.url}}" target="_blank" class="text-break"> {{ order.file_upload.name}}
     </a>
     </p>
     {% else %}
@@ -32,11 +32,11 @@
 <p><strong>Price: £{{ order.price}}</strong></p>
 <form method="post">
     {% csrf_token %}
-    <button class="btn btn-inicial" type="submit" name="action" value="edit">Edit</button>
-    <button class="btn btn-inicial" type="submit" name="action" value="cancel"
+    <button class="btn btn-inicial m-1" type="submit" name="action" value="edit">Edit</button>
+    <button class="btn btn-inicial m-1" type="submit" name="action" value="cancel"
         onclick="return confirm('Are you sure you want to cancel this order? This action cannot be undone.')">Cancel
     </button>
-    <a href="{% url 'checkout' order.order_number %}" class="btn btn-inicial">
+    <a href="{% url 'checkout' order.order_number %}" class="btn btn-inicial m-1">
         <span>Proceed to Payment</span>
     </a>
 
