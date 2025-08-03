@@ -19,9 +19,9 @@
     <p><strong>Design Type: </strong>{{ order.design_type|capfirst}}</p>
     <p><strong>Size: </strong>{{ order.size|capfirst}}</p>
     <p><strong>Description: </strong>{{ order.description}}</p>
-    {% if order.field_upload %}
+    {% if order.file_upload %}
     <p><strong>File: </strong>
-    <a href="{{ order.field_upload.url}}" target="_blank"> {{ order.field_upload.name}}
+    <a href="{{ order.file_upload.url}}" target="_blank"> {{ order.file_upload.name}}
     </a>
     </p>
     {% else %}

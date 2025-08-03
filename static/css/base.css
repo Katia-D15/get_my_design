@@ -4,7 +4,7 @@ body {
     min-height: 100vh;
     color: #000000;
     padding-top: 80px;
-    
+    height: 100%;
 }
 
 
@@ -42,8 +42,12 @@ body {
     z-index: 99999999999;
 }
 
-.main-logo-link{
+.main-logo-link {
     width: fit-content;
+}
+
+.main-bg {
+    flex: 1 0 auto;
 }
 
 /*==================

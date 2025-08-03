@@ -40,8 +40,10 @@ class Order(models.Model):
     status = models.CharField(
         max_length=20, choices=STATUS_OPTIONS, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
-    field_upload = models.FileField(
+    file_upload = models.FileField(
         upload_to='orders/files', blank=True, null=True)
+    final_file = models.FileField(
+        upload_to='orders/final_files', blank=True, null=True)
 
     class Meta:
         ordering = ['-created_at']

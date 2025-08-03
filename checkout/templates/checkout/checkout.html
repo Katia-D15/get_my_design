@@ -16,9 +16,9 @@
         <p><strong>Design Type: </strong>{{ order.design_type|capfirst}}</p>
         <p><strong>Size: </strong>{{ order.size|capfirst}}</p>
         <p><strong>Description: </strong>{{ order.description}}</p>
-        {% if order.field_upload %}
+        {% if order.file_upload %}
         <p><strong>File: </strong>
-        <a href="{{ order.field_upload.url}}" target="_blank"> {{ order.field_upload.name}}
+        <a href="{{ order.file_upload.url}}" target="_blank"> {{ order.file_upload.name}}
         </a>
         </p>
         {% else %}
@@ -27,11 +27,11 @@
         </div>
     </fieldset>
 
+    <p><strong>Price: £{{ order.price}}</strong></p>
     <fieldset class="px-3">
-        <legend class="fieldset-label small text-black px-2 w-auto" >Payment</legend>
         <div class="mb-3"></div>
         <div class="mb-3"></div>
-        <p><strong>Price: £{{ order.price}}</strong></p>
+        <legend class="fieldset-label small text-black px-2 w-auto" >Card Details: </legend>
         <div id="card-element" class="mb-3"></div>
         <div id="card-errors" role="alert" class="text-danger mb-3"></div>
     </fieldset>

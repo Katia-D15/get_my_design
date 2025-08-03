@@ -8,7 +8,8 @@ class OrderAdmin(admin.ModelAdmin):
                     'design_type',
                     'size',
                     'price',
-                    'created_at')
+                    'status',
+                    'created_at',)
 
     ordering = ('-created_at', )
 

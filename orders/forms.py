@@ -5,12 +5,12 @@ from .models import Order
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['design_type', 'size', 'description', 'field_upload']
+        fields = ['design_type', 'size', 'description', 'file_upload']
         labels = {
             'design_type': 'Choose one Design type',
             'size': 'Choose the size of your Design',
             'description': 'Give us more details about your custom design',
-            'field_upload': 'You can upload an image (Optional)',
+            'file_upload': 'You can upload an image (Optional)',
         }
 
         widgets = {
