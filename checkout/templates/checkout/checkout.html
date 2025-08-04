@@ -2,6 +2,10 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="border border-dark rounded p-4 mx-auto custom-max-width mb-5">
 <div class="row">
@@ -18,7 +22,7 @@
         <p><strong>Description: </strong>{{ order.description}}</p>
         {% if order.file_upload %}
         <p><strong>File: </strong>
-        <a href="{{ order.file_upload.url}}" target="_blank"> {{ order.file_upload.name}}
+        <a class="text-break" href="{{ order.file_upload.url}}" target="_blank"> {{ order.file_upload.name}}
         </a>
         </p>
         {% else %}
@@ -29,8 +33,6 @@
 
     <p><strong>Price: £{{ order.price}}</strong></p>
     <fieldset class="px-3">
-        <div class="mb-3"></div>
-        <div class="mb-3"></div>
         <legend class="fieldset-label small text-black px-2 w-auto" >Card Details: </legend>
         <div id="card-element" class="mb-3"></div>
         <div id="card-errors" role="alert" class="text-danger mb-3"></div>
@@ -43,6 +45,14 @@
 
 </div>
 </div>
+</div>
+
+<div id="loading-overlay">
+    <h1 class="text-light logo-font loading-spinner">
+        <span class="icon">
+            <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+        </span>
+    </h1>
 </div>
 {% endblock %}
 

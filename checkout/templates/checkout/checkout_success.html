@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="border border-dark rounded p-4 mx-auto custom-max-width mb-5">
+  <div class="row">
+    <div class="col-12 col-sm-10 col-md-8 mt-3 offset-sm-1 offset-md-2">
+     <h2 class="mb-5 text-success">Payment Successful</h2>
+
+     <p class="lead"> Thank you for your order!</p>
+     <p>A confirmation email will be sent to <strong> {{ order.user.email }}</strong></p>
+
+    <fieldset class="rounded px-3 mb-5">
+        <legend class="fieldset-label"> Order Details</legend>
+        <div class="mb-4">
+        <p class="text-break"><strong>Order Number: </strong>{{ order.order_number}}</p>
+        <p><strong>Design Type: </strong>{{ order.design_type|capfirst}}</p>
+        <p><strong>Size: </strong>{{ order.size|capfirst}}</p>
+        <p><strong>Description: </strong>{{ order.description}}</p>
+
+        {% if order.file_upload %}
+        <p><strong>File: </strong>
+        <a href="{{ order.file_upload.url}}" target="_blank"> {{ order.file_upload.name}}
+        </a>
+        </p>
+        {% else %}
+        <p><strong>File(s): </strong>None</p>
+        {% endif %}
+        </div>
+    </fieldset>
+
+    <p><strong>Price: £{{ order.price}}</strong></p>
+
+    </div>
+</div>
+</div>
+{% endblock %}
