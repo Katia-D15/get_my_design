@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order
+from .models import Order, Comment
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -15,3 +15,20 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Order, OrderAdmin)
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user',
+                    'public_name',
+                    'approved',
+                    'created_at',)
+
+    list_filter = ('approved',
+                   'created_at',
+                   'order__design_type',
+                   )
+
+    ordering = ('-created_at', )
+
+
+admin.site.register(Comment, CommentAdmin)

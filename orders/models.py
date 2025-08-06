@@ -64,3 +64,24 @@ class Order(models.Model):
             f"Order {self.order_number} by {self.user.username}"
             f" created at: {self.created_at}"
         )
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='comments')
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    image = models.ImageField(
+        upload_to='comments/comment_images', blank=True, null=True)
+    public_name = models.CharField(max_length=100, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return (
+            f"Comment by {self.public_name or 'Anonymous'}"
+            f" on {self.created_at.strftime('%d/%m/%Y')}")
