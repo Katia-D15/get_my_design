@@ -53,6 +53,9 @@ form.addEventListener('submit', function(ev) {
     stripe.confirmCardPayment(clientSecret, {
         payment_method: {
             card: card,
+            billing_details: {
+                name:'Client',
+            }
         },
     }).then(function(result) {
         if (result.error) {
@@ -71,7 +74,7 @@ form.addEventListener('submit', function(ev) {
         } else {
             if (result.paymentIntent.status === 'succeeded'){
                 form.submit();
-            }
+            } 
         }
     });
 });

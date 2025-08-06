@@ -15,10 +15,14 @@ def checkout(request, order_number):
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
     if request.method == 'POST':
-        if order.status == 'pending':
-            order.status = 'confirmed'
-            order.save()
-        return redirect('checkout_success', order_number=order.order_number)
+        try:
+            if order.status == 'pending':
+                order.status = 'confirmed'
+                order.save()
+            return redirect(
+                'checkout_success', order_number=order.order_number)
+        except Exception as e:
+            return render(request, 'checkout/error.html', {'error': str(e)})
 
     stripe_total = round(order.price * 100)
     stripe.api_key = stripe_secret_key

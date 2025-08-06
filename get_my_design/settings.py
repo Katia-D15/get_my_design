@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', ]
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'localhost', ]
 
 
 # Application definition
@@ -174,6 +174,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STRIPE_CURRENCY = 'gbp'
 STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_WH_SECRET = os.environ.get('STRIPE_WH_SECRET')
 
 
 # Default primary key field type
