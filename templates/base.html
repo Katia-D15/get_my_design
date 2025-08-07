@@ -4,6 +4,7 @@
 {% url 'account_login' as login%}
 {% url 'create_order' as create_order_url %}
 {% url 'my_orders' as my_orders_url %}
+{% url 'previous_work' as previous_work_url %}
 
 <!doctype html>
 <html lang="en">
@@ -73,6 +74,9 @@
             </button>
         <div class="collapse navbar-collapse" id="main-nav">
           <ul class= "navbar-nav mr-auto mb-2 mb-lg-0">
+             <li class="nav-item">
+              <a class="nav-link {% if request.path == previous_work_url %}active" aria-current="page{% endif %}" href="{% url 'previous_work' %}">Previous Work</a>
+             </li>
           {% if request.user.is_authenticated %}
              <li class="nav-item">
               <a class="nav-link {% if request.path == my_orders_url %}active" aria-current="page{% endif %}" href="{% url 'my_orders' %}">My Orders</a>
@@ -83,9 +87,6 @@
           {% else%}
              <li class="nav-item">
               <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}" href="{% url 'home' %}">Home</a>
-             </li>
-             <li class="nav-item">
-              <a class="nav-link">Previous Work</a>
              </li>
              <li class="nav-item">
               <a class="nav-link {% if request.path == login %}active" aria-current="page{% endif %}" href="{% url 'account_login' %}">Make a Request</a>

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Order
+from .models import Order, Comment
 
 
 class OrderForm(forms.ModelForm):
@@ -23,4 +23,27 @@ class OrderForm(forms.ModelForm):
             'design_type': forms.Select(attrs={'class': 'form-select'}),
             'size': forms.Select(attrs={'class': 'form-select'}),
 
+        }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['public_name', 'content', 'image', ]
+        labels = {
+            'public_name': 'Write your public name',
+            'content': 'Write your comment',
+            'image': 'upload an image(optional)',
+        }
+
+        widgets = {'public_name': forms.TextInput(
+            attrs={'class': 'form-control', }),
+                   'content': forms.Textarea(
+                       attrs={
+                           'class': 'form-control',
+                           'rows': 3,
+                           'placeholder': 'Write here'}),
+                   'image': forms.ClearableFileInput(
+                       attrs={
+                           'class': 'form-control-file', }),
         }
