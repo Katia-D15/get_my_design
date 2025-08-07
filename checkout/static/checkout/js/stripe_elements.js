@@ -1,5 +1,5 @@
 /**
- * 
+ * Set up and process a payment with Sripe Elements
  */
 
 var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
@@ -47,10 +47,16 @@ form.addEventListener('submit', function(ev) {
     $('#payment-form').fadeToggle(100);
     $('#loading-overlay').fadeToggle(100);
 
-    var saveInfo = Boolean($('#id-save-info').attr('checked'));
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+    var postData = {
+        'csrfmiddlewaretoken': csrfToken,
+        'client_secret': clientSecret,    
+    };
 
-    stripe.confirmCardPayment(clientSecret, {
+    var url = '/checkout/cache_checkout_data/';
+
+    $.post(url, postData).done(function() {
+        stripe.confirmCardPayment(clientSecret, {
         payment_method: {
             card: card,
             billing_details: {
@@ -74,7 +80,13 @@ form.addEventListener('submit', function(ev) {
         } else {
             if (result.paymentIntent.status === 'succeeded'){
                 form.submit();
-            } 
+            }
         }
     });
+
+  }).fail(function() {
+    location.reload();
+});
+
+
 });
