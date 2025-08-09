@@ -75,6 +75,9 @@
         <div class="collapse navbar-collapse" id="main-nav">
           <ul class= "navbar-nav mr-auto mb-2 mb-lg-0">
              <li class="nav-item">
+              <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}" href="{% url 'home' %}">Home</a>
+             </li>
+             <li class="nav-item">
               <a class="nav-link {% if request.path == previous_work_url %}active" aria-current="page{% endif %}" href="{% url 'previous_work' %}">Previous Work</a>
              </li>
           {% if request.user.is_authenticated %}
@@ -85,9 +88,6 @@
               <a class="nav-link {% if request.path == create_order_url %}active" aria-current="page{% endif %}" href="{% url 'create_order' %}">Request your Design</a>
              </li>
           {% else%}
-             <li class="nav-item">
-              <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}" href="{% url 'home' %}">Home</a>
-             </li>
              <li class="nav-item">
               <a class="nav-link {% if request.path == login %}active" aria-current="page{% endif %}" href="{% url 'account_login' %}">Make a Request</a>
              </li>
@@ -163,10 +163,22 @@
     <!-- Footer -->
     <footer class="footer mt-auto py-3">
         <p class="m-0 text-center text-white">{% block copyright %}GetMyDesign{% endblock %}</p>
-        <p class="m-0 text-center text-white">Follow us: <i class="fab fa-facebook-square ml-3"></i>
-            <i class="fab fa-twitter-square ml-3"></i>
-            <i class="fab fa-instagram-square ml-3"></i>
-            <i class="fab fa-youtube-square ml-3"></i>
+        <p class="m-0 text-center text-white">
+          <i class="fa-solid fa-phone m-3" ></i>07123456789
+        </p>
+        <p class="m-0 text-center text-white">Follow us: 
+            <a href="https://www.facebook.com" target="_blank" class="text-white" aria-label="Follow us on Facebook" title="Follow us on Facebook">
+              <i class="fab fa-facebook-square ml-3"></i>
+            </a>
+            <a href="https://www.twitter.com" target="_blank" aria-label="Visit our Twitter" class="text-white" title="Visit our Twitter">
+              <i class="fab fa-twitter-square ml-3"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" aria-label="Visit our Instagram" class="text-white" title="Visit our Instagram">
+              <i class="fab fa-instagram-square ml-3"></i>
+            </a>
+            <a href="https://www.youtube.com" target="_blank" aria-label="Visit our channel on Youtube" class="text-white" title="Visit our channel on Youtube">
+              <i class="fab fa-youtube-square ml-3"></i>
+            </a>
         </p>
     </footer>
 
