@@ -65,7 +65,7 @@ def review_order(request, order_number):
             order.status = 'cancelled'
             order.save()
             messages.add_message(
-                request, messages.WARNING,
+                request, messages.SUCCESS,
                 'Your order has been cancelled.'
                         )
             return redirect('home')
