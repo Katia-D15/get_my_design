@@ -10,6 +10,8 @@ class OrderAdmin(admin.ModelAdmin):
                     'price',
                     'status',
                     'created_at',)
+    list_filter = ('status',
+                   'design_type',)
 
     ordering = ('-created_at', )
 
