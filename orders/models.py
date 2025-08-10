@@ -1,17 +1,13 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
+from core.choices import DesignTypeChoices
 
 
 class Order(models.Model):
     """
     Represents an order made by a user (:model: `auth.User`)
     """
-    DESIGN_TYPES = [
-        ('icon', 'Icon'),
-        ('logo', 'Logo'),
-        ('poster', 'Poster'),
-    ]
 
     SIZE_OPTIONS = [
         ('small', 'Small'),
@@ -31,7 +27,8 @@ class Order(models.Model):
     order_number = models.CharField(
         max_length=32, unique=True, null=False, editable=False)
     design_type = models.CharField(
-        max_length=20, choices=DESIGN_TYPES, null=False, blank=False)
+        max_length=20, choices=DesignTypeChoices.choices,
+        null=False, blank=False)
     size = models.CharField(
         max_length=10, choices=SIZE_OPTIONS, null=False, blank=False)
     description = models.TextField(null=False, blank=False)
@@ -67,6 +64,9 @@ class Order(models.Model):
 
 
 class Comment(models.Model):
+    """
+    Represents a comment made by the user (:model: `auth.User`)
+    """
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='comments')
     order = models.ForeignKey(

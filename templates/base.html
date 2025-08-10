@@ -5,6 +5,7 @@
 {% url 'create_order' as create_order_url %}
 {% url 'my_orders' as my_orders_url %}
 {% url 'previous_work' as previous_work_url %}
+{% url 'portfolio_items' as portfolio_items_url %}
 
 <!doctype html>
 <html lang="en">
@@ -79,6 +80,9 @@
              </li>
              <li class="nav-item">
               <a class="nav-link {% if request.path == previous_work_url %}active" aria-current="page{% endif %}" href="{% url 'previous_work' %}">Previous Work</a>
+             </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == portfolio_items_url %}active" aria-current="page{% endif %}" href="{% url 'portfolio_items' %}">Portfolio Items</a>
              </li>
           {% if request.user.is_authenticated %}
              <li class="nav-item">
