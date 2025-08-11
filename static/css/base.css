@@ -64,3 +64,15 @@ footer {
     max-width: 700px;
     width: 100%;
 }
+
+/*==================
+     Mailchimp
+====================*/
+#mc_embed_signup {
+    background:#fff;
+    clear:left; 
+    font:14px Helvetica,Arial,sans-serif; 
+    width: 100%;
+    max-width: 520px;
+    margin:0 auto;
+}
