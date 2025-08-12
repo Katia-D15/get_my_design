@@ -1,4 +1,5 @@
 import uuid
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 from core.choices import DesignTypeChoices
@@ -44,6 +45,16 @@ class Order(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+    def clean(self):
+        """
+        Require final_file when status is 'completed'.
+        """
+        super().clean()
+        if self.status == 'completed' and not self.final_file:
+            raise ValidationError(
+                {'final_file':
+                    "Required when status is 'completed'."})
 
     def _generate_order_number(self):
         """
