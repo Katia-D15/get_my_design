@@ -1,9 +1,67 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'portfolio/css/portfolio.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="border border-dark rounded p-4 mx-auto custom-max-width mb-5">
-<div class="row">
-<div class="col-12 col-sm-10 col-md-8 mt-3 offset-sm-1 offset-md-2">
-<h2 class="text-center">Portfolio Items</h2>
+    <div class="border border-dark rounded p-4 mx-auto custom-max-width mb-5">
+        <div class="row">
+            <div class="col-12 col-lg-10 mx-auto">
+                <h2 class="text-center">Portfolio Items</h2>
 
+                {% if items %}
+                   <form method="get" class="form-inline justify-content-end mb-3">
+                       <select 
+                           name="design_type" 
+                           class="custom-select custom-select-sm mr-2" 
+                           onchange='this.form.submit()'
+                        >
+                          <option value=''>Design types</option>
+                          {% for value, label in available_types %}
+                              <option value="{{ value}}" {% if selected_type == value %}selected{% endif %}>
+                                {{ label }}
+                              </option>
+                          {% endfor%}
+                        </select>
+
+                        {% if selected_type %}
+                           <a href="{% url 'portfolio_items' %}" class="btn btn-inicial">Clean</a>
+                        {% endif %}
+                    </form>
+
+                    <div class="row">
+                        {% for item in items %}
+                           <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="">
+                                <div class="card h-100 flex-fill d-flex flex-column bg-transparent p-1 border border-dark rounded">
+                                    {% if item.image %}
+                                       <div class="embed-responsive embed-responsive-1by1">
+                                        <img 
+                                        src="{{ item.image.url}}" 
+                                        alt="{{item.title}}"
+                                        class="embed-responsive-item"
+                                        loading="lazy">
+                                       </div>
+                                    {% endif %}
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ item.title}}</h5>
+                                        <h6 class="card-subtitle text-muted mb-2">
+                                            <span class="text-capitalize">{{ item.design_type}}</span>
+                                        </h6>
+                                        <p class="card-text">{{ item.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else%}
+                   <p class="text-center mt-5">No items available</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
