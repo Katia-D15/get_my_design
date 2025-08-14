@@ -24,6 +24,14 @@ body {
     image-rendering: auto;
 }
 
+.hero-image {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    object-fit: cover;
+    image-rendering: auto;
+}
+
 .btn-inicial {
     color: white;
     background: #0056b3;
