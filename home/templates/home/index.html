@@ -7,9 +7,9 @@
 
     <section class="row mb-5 border border-dark rounded p-3 mx-2 mx-md-5">
         <div class="col-12 text-center">
-            <h2>Welcome to GetMyDesign</h2>
-            <p class="mt-2">Professional graphic design services.</p>
-            <img src="/media/hero-image.jpg" class="img-fluid rounded shadow-sm hero-image " alt="Design">
+            <h1>GetMyDesign</h1>
+            <h2 class="mt-2">Professional graphic design services.</h2>
+            <img src="{% static 'images/hero-image.jpg' %}" class="img-fluid rounded shadow-sm hero-image " alt="hero image">
             <p class="font-weight-bold font-italic mt-2">We transform ideas into design.</p>
             <a href="{% url 'portfolio_items' %}" class="btn btn-inicial">Portfolio Items</a>
         </div>
@@ -17,19 +17,22 @@
 
     <section class="row mb-5 border border-dark rounded p-3 mx-2 mx-md-5">
         <div class="col-12 text-center mb-4">
-            <h3>Our Work in Action</h3>
-            <p>A glimpse into some of our design projects.</p>
+            <h3>Custom graphic Design</h3>
+            <p class="mt-2">From ideas to design--see the results.</p>
         </div>
         <div class="col-12 col-md-4 mb-4">
-            <img src="/media/icon.jpg" class="img-fluid rounded shadow-sm img-fixed-size" alt="Design">
-        </div>
-
-        <div class="col-12 col-md-4 mb-4">
-            <img src="/media/logo.jpg" class="img-fluid rounded shadow-sm img-fixed-size" alt="Design">
+            <img src="{% static 'images/icon.jpg' %}" class="img-fluid rounded shadow-sm img-fixed-size" alt="hand icon - custom icon design">
+            <p class="text-center"><strong>Icon design</strong></p>
         </div>
 
         <div class="col-12 col-md-4 mb-4">
-            <img src="/media/poster.jpg" class="img-fluid rounded shadow-sm img-fixed-size" alt="Design">
+            <img src="{% static 'images/logo.jpg' %}" class="img-fluid rounded shadow-sm img-fixed-size" alt="ampersand logo - custom logo design">
+            <p class="text-center"><strong>Logo design</strong></p>
+        </div>
+
+        <div class="col-12 col-md-4 mb-4">
+            <img src="{% static 'images/poster.jpg' %}" class="img-fluid rounded shadow-sm img-fixed-size" alt="coffee shop poster - custom poster design">
+            <p class="text-center"><strong>Poster design</strong></p>
         </div>
     </section>
 
@@ -47,12 +50,13 @@
 
     <section class="row mb-5 border border-dark rounded p-3 mx-2 mx-md-5">
         <div class="col text-center">
-            <h3>Request your Design</h3>
-            <p>Fill out the form for your custom order.</p>
+            <h3>Request a graphic Design</h3>
             {% if user.is_authenticated %}
+            <p>Fill out the form for your custom order.</p>
             <a href="{% url 'create_order' %}" class="btn btn-inicial">Request your Design</a>
             {% else %}
-            <a href="{% url 'account_login' %}" class="btn btn-inicial">Request your Design</a>
+            <p>Request a custom graphic design.</p>
+            <a href="{% url 'account_login' %}" class="btn btn-inicial">Request a Design</a>
             {% endif %}
         </div>
     </section>

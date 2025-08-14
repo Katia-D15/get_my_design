@@ -16,18 +16,23 @@ body {
 
 }
 
-.img-fixed-size {
-    width: 100%;
-    max-width: 300px;
-    height: 200px;
-    object-fit: cover;
-    image-rendering: auto;
+#logo {
+    font-size: 1.5rem;
 }
 
 .hero-image {
     width: 100%;
     max-width: 700px;
     height: auto;
+    object-fit: cover;
+    image-rendering: auto;
+}
+
+
+.img-fixed-size {
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
     object-fit: cover;
     image-rendering: auto;
 }

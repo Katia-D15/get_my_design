@@ -14,6 +14,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie-edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>GetMyDesign {% block extra_title%}{% endblock %}</title>
+    <meta name="description"
+          content="Custom graphic design services from GetMyDesign. Browse work by design type and request a design in minutes.">
+    <meta name="keywords"
+          content="request a custom graphic design, logo design, icon design, poster design,
+          graphic design services, custom graphic design, online graphic design services,
+          custom logo design, custom icon design, custom poster design, request your design ">
     {% endblock %}
 
     {% block extra_meta %}
@@ -41,7 +48,6 @@
 
     {% block extra_js %}
     {% endblock %}
-    <title>GetMyDesign {% block extra_title%}{% endblock %}</title>
   </head>
   <body class="d-flex flex-column min-vh-100">
     <header class="container-fluid fixed-top px-0">
@@ -49,7 +55,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
           <div class="container-fluid ">
                 <a href="{% url 'home' %}" class="nav-link main-logo-link">
-               <h2 class="text-dark my-0"><strong>GetMyDesign</strong></h2>
+               <span  id="logo" class="text-dark my-0"><strong>GetMyDesign</strong></span>
                 </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
              aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,16 +160,16 @@
           <i class="fa-solid fa-phone m-3" ></i>07123456789
         </p>
         <p class="m-0 text-center text-white">Follow us: 
-            <a href="https://www.facebook.com" target="_blank" class="text-white" aria-label="Follow us on Facebook" title="Follow us on Facebook">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener" class="text-white" aria-label="Follow us on Facebook" title="Follow us on Facebook">
               <i class="fab fa-facebook-square ml-3"></i>
             </a>
-            <a href="https://www.twitter.com" target="_blank" aria-label="Visit our Twitter" class="text-white" title="Visit our Twitter">
+            <a href="https://www.twitter.com" target="_blank" rel="noopener" aria-label="Visit our Twitter" class="text-white" title="Visit our Twitter">
               <i class="fab fa-twitter-square ml-3"></i>
             </a>
-            <a href="https://www.instagram.com" target="_blank" aria-label="Visit our Instagram" class="text-white" title="Visit our Instagram">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Visit our Instagram" class="text-white" title="Visit our Instagram">
               <i class="fab fa-instagram-square ml-3"></i>
             </a>
-            <a href="https://www.youtube.com" target="_blank" aria-label="Visit our channel on Youtube" class="text-white" title="Visit our channel on Youtube">
+            <a href="https://www.youtube.com" target="_blank" rel="noopener" aria-label="Visit our channel on Youtube" class="text-white" title="Visit our channel on Youtube">
               <i class="fab fa-youtube-square ml-3"></i>
             </a>
         </p>
