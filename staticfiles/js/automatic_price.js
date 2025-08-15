@@ -14,28 +14,28 @@ document.addEventListener('DOMContentLoaded', function (){
         switch(designInput.value) {
             case 'icon':
             price += 15.55;
-            break
+            break;
             case 'logo':
             price +=25.55;
-            break
+            break;
             case 'poster':
             price +=35.55;
-            break
+            break;
         }
 
          switch(sizeInput.value) {
             case 'small':
             price += 5;
-            break
+            break;
             case 'medium':
             price +=10;
-            break
+            break;
             case 'large':
             price +=20;
-            break
+            break;
         }
 
-        pricePreview.textContent = price.toFixed(2)
+        pricePreview.textContent = price.toFixed(2);
     }
 
     
