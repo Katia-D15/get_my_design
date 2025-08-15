@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 import stripe
 from orders.models import Order
 
@@ -62,15 +64,38 @@ def checkout(request, order_number):
 
 def checkout_success(request, order_number):
     """
-    Handle successful checkouts
+    Render the checkout success page and attempt
+    to email a confirmation to the authenticated user.
     """
     order = get_object_or_404(Order, order_number=order_number)
 
-    messages.add_message(
-        request,
-        messages.SUCCESS,
-        f'Order successfully Confirmed!'
-        f'A confirmation email will be sent to {order.user.email}')
+    recipient = request.user.email
+
+    sent = 0
+
+    try:
+        sent = send_mail(
+            subject=f"Payment confirmed - Order #{order.order_number}",
+            message=render_to_string("checkout/emails/payment_success.txt",
+                                     {"order": order}),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[recipient],
+            fail_silently=False
+        )
+    except Exception:
+        pass
+
+    if sent:
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            'Order successfully Confirmed!'
+            f'A confirmation email has been sent sent to {recipient}')
+    else:
+        messages.add_message(
+            request,
+            messages.WARNING,
+            "We couldn't send the confirmation email right now.")
 
     template = 'checkout/checkout_success.html'
     context = {

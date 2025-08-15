@@ -1,0 +1,20 @@
+
+
+
+Hello {{recipient}}
+
+Payment confirmed!!
+
+Order Number: {{ order.order_number}}
+
+Order Details:
+
+Design Type: {{ order.design_type}}
+Size: {{ order.size}}
+Description: {{ order.description}}
+
+
+Price: £{{ order.price}}
+
+Thank you
+Get My Design
