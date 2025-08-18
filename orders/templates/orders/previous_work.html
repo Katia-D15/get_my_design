@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% url 'account_login' as login%}
 {% load crispy_forms_tags %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'orders/css/orders.css' %}">
+{% endblock %}
 
 
 {% block content %}
@@ -22,7 +26,9 @@
     <h5>{{ comment.public_name }}</h5>
     <p>{{ comment.content }}</p>
     {% if comment.image %}
+    <div class="img-frame">
     <img src="{{ comment.image.url}}" alt="Comment image" class="img-fluid mb-2">
+    </div>
     {% endif %}
     <small class="text-muted">{{ comment.created_at|date:"d/m/Y"}}</small>
 </div>
