@@ -16,12 +16,12 @@
         </div>
         {% if order.status == 'pending' %}
         <a href="{% url 'review_order' order.order_number %}" class="btn btn-inicial m-2">
-            Resume Request
+            Resume request
         </a>
         {% elif order.status == 'confirmed' %}
         <span> Waiting for design to be completed.</span>
         {% elif order.status == 'completed' and order.final_file %}
-        <a href="{{ order.final_file.url }}" class="btn btn-inicial" target="_blank" download>
+        <a href="{{ order.final_file.url }}" class="btn btn-inicial" download>
             Download
         </a>
         {% else %}
