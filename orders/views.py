@@ -97,8 +97,14 @@ def previous_work(request):
     Render the "Previous Work" page showing all approved comments
     for completed orders. Includes a comment form for the logged-in
     user's completed orders.
+
+    Anonymous users see only completed orders that already have
+    approved comments (no forms).
     '''
     orders = Order.objects.filter(status='completed').order_by('-created_at')
+
+    if not request.user.is_authenticated:
+        orders = orders.filter(comments__approved=True).distinct()
 
     for order in orders:
         order.comments_approved = order.comments.filter(

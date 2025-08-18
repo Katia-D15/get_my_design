@@ -2,6 +2,7 @@
 {% url 'account_login' as login%}
 {% load crispy_forms_tags %}
 {% load static %}
+
 {% block extra_css%}
 <link rel="stylesheet" href="{% static 'orders/css/orders.css' %}">
 {% endblock %}
@@ -9,48 +10,52 @@
 
 {% block content %}
 <div class="border border-dark rounded p-4 mx-auto custom-max-width mb-5">
-<div class="row">
-<div class="col-12 col-sm-10 col-md-8 mt-3 offset-sm-1 offset-md-2">
-<h2 class="text-center mb-5">Previous Work</h2>
+    <div class="row">
+        <div class="col-12 col-sm-10 col-md-8 mt-3 offset-sm-1 offset-md-2">
+            <h2 class="text-center mb-5">Previous Work</h2>
 
+            {% for order in orders %}
+            {% if order.comments_approved|length or user.is_authenticated and order.comment_form %}
+                <div class="mb-5 border-bottom pb-4" id="order-{{ order.id}}">
+                {% if user.is_authenticated%}
+                  <h6 class="mt-5 text-break">Order {{ order.order_number}}</h6>
+                {% endif %}
 
-{% for order in orders %}
-<div class="mb-5 border-bottom pb-4" id="order-{{ order.id}}">
-    {% if user.is_authenticated%}
-    <h6 class="mt-5 text-break">Order {{ order.order_number}}</h6>
-    {% endif %}
+                {% if order.comments_approved %}
+                      {% for comment in order.comments_approved %}
+                      <div class="mb-3 border-left pl-3 bg-white border border-dark rounded">
+                        <h5>{{ comment.public_name }}</h5>
+                        <p>{{ comment.content }}</p>
+                        {% if comment.image %}
+                        <div class="img-frame">
+                            <img src="{{ comment.image.url}}" alt="Comment image" class="img-fluid mb-2">
+                        </div>
+                        {% endif %}
+                        <small class="text-muted">{{ comment.created_at|date:"d/m/Y"}}</small>
+                      </div>
+                      {% endfor %}
+                {% elif user.is_authenticated and order.comment_form %}
+                    <p>No comments yet</p>
+                {% endif %}
 
-{% if order.comments_approved %}
-{% for comment in order.comments_approved %}
-<div class="mb-3 border-start ps-3 bg-white border border-dark rounded">
-    <h5>{{ comment.public_name }}</h5>
-    <p>{{ comment.content }}</p>
-    {% if comment.image %}
-    <div class="img-frame">
-    <img src="{{ comment.image.url}}" alt="Comment image" class="img-fluid mb-2">
+                {% if user.is_authenticated and order.comment_form %}
+                    <h5 class="mt-4">Leave a comment</h5>
+                    <form method="POST" enctype="multipart/form-data" action="{% url 'submit_comment' order.id %}">
+                        {% csrf_token %}
+                        {{order.comment_form|crispy}}
+                        <button type="submit" class="btn btn-inicial mt-2">Submit Comment</button>
+                    </form>
+                {% endif %}
+            </div>
+            
+
+            {%endif%}
+
+        {% endfor %}
+                    {% if not user.is_authenticated %}
+                <p class="text-center">You must <a href="{{ login }}">Log in </a>to leave a comment.</p>
+            {% endif %}
+        </div>
     </div>
-    {% endif %}
-    <small class="text-muted">{{ comment.created_at|date:"d/m/Y"}}</small>
-</div>
-{% endfor %}
-{% endif %}
-
-
-{% if order.comment_form %}
-<h5 class="mt-4">Leave a comment</h5>
-<form method="POST" enctype="multipart/form-data" action="{% url 'submit_comment' order.id %}">
-{% csrf_token %}
-{{order.comment_form|crispy}}
-
-<button type="submit" class="btn btn-inicial mt-2">Submit Comment</button>
-</form>
-{% endif %}
-</div>
-{% endfor %}
-{% if not user.is_authenticated %}
-<p class="text-center">You must <a href="{{ login }}">Log in </a>to leave a comment.</p>
-{% endif %}
-</div>
-</div>
 </div>
 {% endblock %}
