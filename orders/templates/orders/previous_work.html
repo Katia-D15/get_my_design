@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% url 'account_login' as login%}
+{% url 'account_login' as login %}
 {% load crispy_forms_tags %}
 {% load static %}
 
-{% block extra_css%}
+{% block extra_css %}
 <link rel="stylesheet" href="{% static 'orders/css/orders.css' %}">
 {% endblock %}
 
@@ -16,9 +16,9 @@
 
             {% for order in orders %}
             {% if order.comments_approved|length or user.is_authenticated and order.comment_form %}
-                <div class="mb-5 border-bottom pb-4" id="order-{{ order.id}}">
-                {% if user.is_authenticated%}
-                  <h6 class="mt-5 text-break">Order {{ order.order_number}}</h6>
+                <div class="mb-5 border-bottom pb-4" id="order-{{ order.id }}">
+                {% if user.is_authenticated and order.user_id == user.id %}
+                  <h6 class="mt-5 text-break">Order {{ order.order_number }}</h6>
                 {% endif %}
 
                 {% if order.comments_approved %}
@@ -28,31 +28,43 @@
                         <p>{{ comment.content }}</p>
                         {% if comment.image %}
                         <div class="img-frame">
-                            <img src="{{ comment.image.url}}" alt="Comment image" class="img-fluid mb-2">
+                            <img src="{{ comment.image.url }}" alt="Comment image" class="img-fluid mb-2">
                         </div>
                         {% endif %}
-                        <small class="text-muted">{{ comment.created_at|date:"d/m/Y"}}</small>
+                        <small class="text-muted">{{ comment.created_at|date:"d/m/Y" }}</small>
+
+
+                        {% if user.is_authenticated and comment.user_id == user.id %}
+                           {% if editing_id == comment.id %}
+                              <form method="POST" enctype="multipart/form-data" action="{% url 'edit_comment' comment.id %}">
+                                {% csrf_token %}
+                                {{ edit_form|crispy}}
+                                <button type="submit" class="btn btn-inicial mt-2 mb-2">Save changes</button>
+                                <a href="{% url 'previous_work' %}#order-{{ order.id }}" class="btn btn-secondary mt-2 mb-2">Cancel</a>
+                                </form>
+                            {% else %}
+                                <a href="{% url 'edit_comment' comment.id %}#order-{{ order.id }}" class="btn btn-inicial mt-2 mb-2">Edit</a>
+                            {% endif %}
+                        {% endif %}
                       </div>
                       {% endfor %}
                 {% elif user.is_authenticated and order.comment_form %}
-                    <p>No comments yet</p>
-                {% endif %}
-
-                {% if user.is_authenticated and order.comment_form %}
-                    <h5 class="mt-4">Leave a comment</h5>
-                    <form method="POST" enctype="multipart/form-data" action="{% url 'submit_comment' order.id %}">
+                        <h5 class="mt-4">Leave a comment</h5>
+                        <form method="POST" enctype="multipart/form-data" action="{% url 'submit_comment' order.id %}">
                         {% csrf_token %}
                         {{order.comment_form|crispy}}
                         <button type="submit" class="btn btn-inicial mt-2">Submit Comment</button>
                     </form>
+                {% else %}
+                    <p>No comments yet</p>
                 {% endif %}
             </div>
             
 
-            {%endif%}
+            {% endif %}
 
         {% endfor %}
-                    {% if not user.is_authenticated %}
+            {% if not user.is_authenticated %}
                 <p class="text-center">You must <a href="{{ login }}">Log in </a>to leave a comment.</p>
             {% endif %}
         </div>

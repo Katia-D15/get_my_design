@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+
     path("create-order/", views.create_order, name="create_order"),
     path(
         "review/<str:order_number>/",
@@ -12,5 +13,11 @@ urlpatterns = [
     path(
         "submit-comment/<int:order_id>/",
         views.submit_comment,
-        name="submit_comment")
+        name="submit_comment"),
+    path(
+        "edit_comment/<int:comment_id>/",
+        views.edit_comment,
+        name="edit_comment"
+        )
+
 ]

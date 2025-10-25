@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
 from .forms import OrderForm, CommentForm
-from .models import Order
+from .models import Order, Comment
 from .utils import automatic_price
 
 
@@ -32,6 +33,7 @@ def create_order(request):
     return render(request, 'orders/request_your_design.html', {'form': form})
 
 
+@login_required
 def review_order(request, order_number):
     '''
     Manage and Review an order
@@ -100,6 +102,12 @@ def previous_work(request):
 
     Anonymous users see only completed orders that already have
     approved comments (no forms).
+
+    Logged-in users see all completed orders, even those without
+    comments. for their own completed orders, a comment form is
+    available.
+
+    The page also supports editing an existing comment from the logged-in user.
     '''
     orders = Order.objects.filter(status='completed').order_by('-created_at')
 
@@ -109,13 +117,29 @@ def previous_work(request):
     for order in orders:
         order.comments_approved = order.comments.filter(
             approved=True).order_by('-created_at')
-        if request.user.is_authenticated and order.user == request.user:
-            order.comment_form = CommentForm()
-        else:
-            order.comment_form = None
+
+        can_comment = (
+            request.user.is_authenticated
+            and order.user_id == request.user.id
+            and order.status == 'completed'
+        )
+        order.comment_form = CommentForm() if can_comment else None
+
+    editing_id = request.GET.get("edit")
+    edit_form = None
+    if editing_id and request.user.is_authenticated:
+        try:
+            comment = Comment.objects.get(pk=editing_id, user=request.user)
+            edit_form = CommentForm(instance=comment)
+            editing_id = int(editing_id)
+        except (Comment.DoesNotExist, ValueError):
+            editing_id = None
+            edit_form = None
 
     context = {
         'orders': orders,
+        'editing_id': editing_id,
+        'edit_form': edit_form,
     }
     return render(request, 'orders/previous_work.html', context)
 
@@ -146,3 +170,31 @@ def submit_comment(request, order_id):
                 'Comment submitted and awaiting approval.')
 
     return redirect('previous_work')
+
+
+@login_required
+def edit_comment(request, comment_id):
+    '''
+    Allow a logged-in user to edit their own comment.
+    On Post, saves the edited comment as unapproved (requires re-approval)
+    and redirects with a success message.
+    '''
+
+    comment = get_object_or_404(
+        Comment, pk=comment_id,
+        user=request.user
+        )
+
+    if request.method != 'POST':
+        return redirect(f"{reverse('previous_work')}?edit={comment_id}")
+
+    form = CommentForm(request.POST, request.FILES, instance=comment)
+    if form.is_valid():
+        comment_edited = form.save(commit=False)
+        comment_edited.approved = False
+        comment_edited.save()
+        messages.add_message(
+            request, messages.SUCCESS,
+            'Comment updated and sent for re-approval.'
+        )
+        return redirect('previous_work')
