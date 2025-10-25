@@ -107,7 +107,8 @@ def previous_work(request):
     comments. for their own completed orders, a comment form is
     available.
 
-    The page also supports editing an existing comment from the logged-in user.
+    The page also supports editing or deleting an existing
+    comment from the logged-in user.
     '''
     orders = Order.objects.filter(status='completed').order_by('-created_at')
 
@@ -136,10 +137,17 @@ def previous_work(request):
             editing_id = None
             edit_form = None
 
+    deleting_id = request.GET.get("delete")
+    try:
+        deleting_id = int(deleting_id) if deleting_id else None
+    except (TypeError, ValueError):
+        deleting_id = None
+
     context = {
         'orders': orders,
         'editing_id': editing_id,
         'edit_form': edit_form,
+        'deleting_id': deleting_id,
     }
     return render(request, 'orders/previous_work.html', context)
 
@@ -198,3 +206,29 @@ def edit_comment(request, comment_id):
             'Comment updated and sent for re-approval.'
         )
         return redirect('previous_work')
+
+
+@login_required
+def delete_comment(request, comment_id):
+    '''
+    Allow a logged-in user to delete their own comment.
+    '''
+
+    comment = get_object_or_404(
+        Comment, pk=comment_id,
+        user=request.user,
+        order__status='completed',
+    )
+
+    if request.method != 'POST':
+        return redirect(
+            f"{reverse('previous_work')}?delete={comment_id}"
+            f"#order-{comment.order_id}")
+
+    order_id = comment.order_id
+    comment.delete()
+    messages.add_message(
+        request, messages.SUCCESS,
+        'Comment deleted successfully'
+    )
+    return redirect(f"{reverse('previous_work')}#order-{order_id}")
