@@ -36,6 +36,9 @@
 
                         {% if user.is_authenticated and comment.user_id == user.id %}
                            {% if editing_id == comment.id %}
+                           <div class="img-frame">
+                              <img src="{{ order.final_file.url }}" alt="Final file" class="img-fluid mb-2">
+                           </div>
                               <form method="POST" enctype="multipart/form-data" action="{% url 'edit_comment' comment.id %}">
                                 {% csrf_token %}
                                 {{ edit_form|crispy}}
@@ -57,6 +60,9 @@
                       </div>
                       {% endfor %}
                 {% elif user.is_authenticated and order.comment_form %}
+                        <div class="img-frame">
+                        <img src="{{ order.final_file.url }}" alt="Final file" class="img-fluid mb-2">
+                        </div>
                         <h5 class="mt-4">Leave a comment</h5>
                         <form method="POST" enctype="multipart/form-data" action="{% url 'submit_comment' order.id %}">
                         {% csrf_token %}
