@@ -6,6 +6,7 @@
 {% url 'my_orders' as my_orders_url %}
 {% url 'previous_work' as previous_work_url %}
 {% url 'portfolio_items' as portfolio_items_url %}
+{% url 'moderation_queue' as moderation_url %}
 
 <!doctype html>
 <html lang="en">
@@ -70,6 +71,11 @@
              <li class="nav-item">
               <a class="nav-link {% if request.path == previous_work_url %}active" aria-current="page{% endif %}" href="{% url 'previous_work' %}">Previous Work</a>
              </li>
+             {% if request.user.is_authenticated and request.user.is_staff or request.user.is_authenticated and request.user.is_superuser %}
+             <li class="nav-item">
+              <a class="nav-link {% if request.path == moderation_url %}active{% endif %}" href="{{ moderation_url}}">Rate Comments</a>
+             </li>
+             {% endif %}
             <li class="nav-item">
               <a class="nav-link {% if request.path == portfolio_items_url %}active" aria-current="page{% endif %}" href="{% url 'portfolio_items' %}">Portfolio Items</a>
              </li>

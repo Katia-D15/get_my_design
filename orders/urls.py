@@ -23,6 +23,21 @@ urlpatterns = [
         "delete_comment/<int:comment_id>/",
         views.delete_comment,
         name="delete_comment"
-    )
+    ),
+    path(
+        "approve_comment/<int:comment_id>/",
+        views.approve_comment,
+        name="approve_comment"
+    ),
+    path(
+        "reject_comment/<int:comment_id>/",
+        views.reject_comment,
+        name="reject_comment"
+    ),
+    path(
+        "moderation/",
+        views.moderation_queue,
+        name="moderation_queue"
+    ),
 
 ]

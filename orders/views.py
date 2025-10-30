@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.urls import reverse
 from .forms import OrderForm, CommentForm
@@ -232,3 +232,52 @@ def delete_comment(request, comment_id):
         'Comment deleted successfully'
     )
     return redirect(f"{reverse('previous_work')}#order-{order_id}")
+
+
+only_moderators = user_passes_test(
+    lambda u: u.is_active and (u.is_staff or u.is_superuser))
+
+
+@login_required
+@only_moderators
+def approve_comment(request, comment_id):
+    '''
+    Allow staff or superuser to approve comment
+    '''
+    if request.method == "POST":
+        comment = get_object_or_404(Comment, pk=comment_id)
+        comment.approved = True
+        comment.save(update_fields=["approved"])
+        messages.add_message(
+            request, messages.SUCCESS,
+            'Comment approved'
+            )
+    return redirect(request.META.get("HTTP_REFERER", "moderation_queue"))
+
+
+@login_required
+@only_moderators
+def reject_comment(request, comment_id):
+    '''
+    Allow staff or superuser to reject comment
+    '''
+    if request.method == "POST":
+        comment = get_object_or_404(Comment, pk=comment_id)
+        comment.approved = False
+        comment.save(update_fields=["approved"])
+        messages.add_message(
+            request, messages.SUCCESS,
+            'Comment rejected'
+            )
+    return redirect(request.META.get("HTTP_REFERER", "moderation_queue"))
+
+
+@login_required
+@only_moderators
+def moderation_queue(request):
+    '''
+    Display all comments with False value
+    '''
+    comments = Comment.objects.filter(
+        approved=False).select_related("user", "order").order_by("created_at")
+    return render(request, 'orders/rate_comments.html', {"comments": comments})
