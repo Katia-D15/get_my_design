@@ -61,14 +61,25 @@
                       {% endfor %}
                 {% elif user.is_authenticated and order.comment_form %}
                         <div class="img-frame">
-                        <img src="{{ order.final_file.url }}" alt="Final file" class="img-fluid mb-2">
+                            <img src="{{ order.final_file.url }}" alt="Final file" class="img-fluid mb-2">
                         </div>
-                        <h5 class="mt-4">Leave a comment</h5>
-                        <form method="POST" enctype="multipart/form-data" action="{% url 'submit_comment' order.id %}">
-                        {% csrf_token %}
-                        {{order.comment_form|crispy}}
-                        <button type="submit" class="btn btn-inicial mt-2">Submit Comment</button>
-                    </form>
+
+                        <button class="btn btn-inicial mt-2" 
+                                type="button" 
+                                data-toggle="collapse" 
+                                data-target="#comment-form-{{ order.id }}"
+                                aria-expanded="false"
+                                aria-controls="comment-form-{{ order.id }}">
+                            Leave a Comment
+                        </button>
+
+                        <div class="collapse mt-3" id="comment-form-{{ order.id}}">
+                            <form method="POST" enctype="multipart/form-data" action="{% url 'submit_comment' order.id %}">
+                                {% csrf_token %}
+                                {{order.comment_form|crispy}}
+                                <button type="submit" class="btn btn-inicial mt-2">Submit Comment</button>
+                            </form>
+                        </div>
                 {% else %}
                     <p>No comments yet</p>
                 {% endif %}
